@@ -1,5 +1,5 @@
 ################################################################################
-#Extraction environmental values for topographic data 
+# Merging data extracted from Soil Grids.  
 #
 # by E. Gagnon, part of Solanum Geophyte publication 2023
 #
