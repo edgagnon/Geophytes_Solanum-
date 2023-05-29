@@ -81,7 +81,19 @@ climate.data.1$sand_05_mean<-soil.data$sand_05_mean
 
 names(climate.data.1)
 
-#write.csv(climate.data.1,"climate_data_1_50379.csv")
+#Fixing some issues with the names in the file
+
+# Fixing additional issues:
+#[1] "Solanum_tweedianum" "Solanum_lianoides" 
+#S. tweedianum is mispelled, should be S. tweedieanum
+#S. lianoides is a synonym of Solanum schefferi
+
+
+climate.data.2 <- climate.data.1 %>% 
+  mutate(genus.sp = str_replace(genus.sp, "Solanum_tweedianum", "Solanum_tweedieanum")) %>%
+  mutate(genus.sp = str_replace(genus.sp, "Solanum_lianoides", "Solanum_schefferi"))
+
+#write.csv(climate.data.2,"climate_data_2_50379.csv")
 
 ########## Checking problems with synonyms
 
@@ -130,7 +142,7 @@ head(name.list2)
 dim(name.list2)
 
 #3) Use the recoderFunc command to create a new list, that will be based on searching and replacing the oldnames with the newnames
-climate.data.1$genus.sp->toto2
+climate.data.2$genus.sp->toto2
 #df$genus.sp->toto2
 newnames<-recoderFunc(toto2, name.list2$tip.name, name.list2$current.accepted.name)
 length(newnames)#50379
@@ -141,9 +153,9 @@ length(setdiff(unique(newnames),genus.sp))#20
 setdiff(unique(newnames),genus.sp)#39
 
 #5) Add the updated names to the supermatrix
-climate.data.1$genus.sp<-newnames
+climate.data.2$genus.sp<-newnames
 #df$genus.sp<-newnames
-length(unique(climate.data.1$genus.sp))#1179 names
+length(unique(climate.data.2$genus.sp))#1179 names
 #length(unique(df$genus.sp))#1179 names
 
 1179/1232 #94%
@@ -154,7 +166,7 @@ length(unique(climate.data.1$genus.sp))#1179 names
 ###This is the match command that works much better
 #Merging the trait dataset with the environmental dataset
 
-toto<-climate.data.1
+toto<-climate.data.2
 #toto<-df
 names(trait.data)
 head(trait.data)
@@ -187,17 +199,6 @@ dim(toto[!toto$genus.sp %in% remove,])#50365
 
 toto<-toto[!toto$genus.sp %in% remove,]
 
-# Fixing additional issues:
-#[1] "Solanum_tweedianum" "Solanum_lianoides" 
-#S. tweedianum is mispelled, should be S. tweedieanum
-#S. lianoides is a synonym of Solanum schefferi
-
-
-toto <- toto %>% 
-  mutate(genus.sp = str_replace(genus.sp, "Solanum_tweedianum", "Solanum_tweedieanum")) %>%
-  mutate(genus.sp = str_replace(genus.sp, "Solanum_lianoides", "Solanum_schefferi"))
-
-dim(toto)
 
 
 #removing specimes based on their brahms ID to drop from the tomato clade, which are cultivated
@@ -216,6 +217,5 @@ write.csv(toto,"DF_merged_data_50352_V3.csv")
 
 write.table(toto,"../../01_Maps/DF_merged_data_50352a_V3.csv",sep=";")
 write.table(toto,"../../02_PCA_Kernel_Density/DF_merged_data_50352a_V3.csv",sep=";")
-
 
 
