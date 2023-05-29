@@ -13,16 +13,12 @@ library(raster)
 require(SpaDES)
 library(maptools)  ## For wrld_simpl
 
-
-#Get occurrence data
+#set working directory
 setwd("C://Users/edeli/OneDrive/Projets_Recherche/2019_Tuber_project/new_TUber_coding/Solanum_geophytes/00_Data/03_Environmental_Data/Topography_Elevation/")
 dir()
 
-#Going to do the climate data before I do the fire data. 
-
-#occurrence.data<-read.table("DF_resuls_all_spatial_filtering.csv",sep=";")
+#Get occurrence data
 occurrence.data<-read.csv("../../02_Occurrence_Data/03_Spatial_filtering/DF_resuls_all_spatial_filtering_50379a.csv",row.names=1)
-
 toto<-occurrence.data
 
 #Get environmental layers
@@ -32,6 +28,7 @@ elevation_sd #30 arc sec
 
 vrm_med<-raster("vrm_1kmmd_SRTM.tif")
 vrm_med #30 arc sec
+
 #########
 #Extract values based on environmental layers
 
@@ -53,7 +50,6 @@ table(is.na(toto$elv_sd))#13 occurrence records have NA values
 write.csv(toto,"topo_data_50379.csv")
 
 ############
-
 #plotting the maps of the data, to see what it will look like.
 
 library(maptools)
