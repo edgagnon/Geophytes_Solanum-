@@ -1,0 +1,1 @@
+Range sizes were calculated by Ludwig Baldazsati, as part of his Msc Thesis at the University of Edinburgh. Scripts can be obtained by contacting him.
