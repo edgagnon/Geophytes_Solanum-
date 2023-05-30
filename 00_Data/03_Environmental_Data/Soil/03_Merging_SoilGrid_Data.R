@@ -3,8 +3,6 @@
 #
 # by E. Gagnon, part of Solanum Geophyte publication 2023
 #
-#Data comes from this portal:http://www.earthenv.org/topography
-#Download beforehand the tif file you are interested in from the website above.
 ###############################################################################
 
 #set working directory
